@@ -54,4 +54,12 @@ def registro(request):
 @login_required
 def profile(request):
     context = {}
+
+    try:
+        usuario = Usuario.objects.get(pk=request.user['auth_user'])
+        context.update({'usuario': usuario.nombre})
+        
+    except Exception as e:
+        raise Exception(str(e))
+
     return render(request, 'profile.html', context)
